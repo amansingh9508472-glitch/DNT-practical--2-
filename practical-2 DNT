@@ -1,0 +1,88 @@
+using System;
+
+namespace EmployeePayrollSystem
+{
+    interface IPayroll
+    {
+        double CalculateSalary();
+        void DisplayDetails();
+    }
+
+    class Employee
+    {
+        public int EmpId;
+        public string Name;
+
+        public Employee(int id, string name)
+        {
+            EmpId = id;
+            Name = name;
+        }
+    }
+
+    class FullTimeEmployee : Employee, IPayroll
+    {
+        double MonthlySalary;
+
+        public FullTimeEmployee(int id, string name, double salary)
+            : base(id, name)
+        {
+            MonthlySalary = salary;
+        }
+
+        public double CalculateSalary()
+        {
+            return MonthlySalary;
+        }
+
+        public void DisplayDetails()
+        {
+            Console.WriteLine("Full Time Employee");
+            Console.WriteLine("ID : " + EmpId);
+            Console.WriteLine("Name : " + Name);
+            Console.WriteLine("Salary : ₹" + CalculateSalary());
+        }
+    }
+
+    class PartTimeEmployee : Employee, IPayroll
+    {
+        int HoursWorked;
+        double RatePerHour;
+
+        public PartTimeEmployee(int id, string name, int hours, double rate)
+            : base(id, name)
+        {
+            HoursWorked = hours;
+            RatePerHour = rate;
+        }
+
+        public double CalculateSalary()
+        {
+            return HoursWorked * RatePerHour;
+        }
+
+        public void DisplayDetails()
+        {
+            Console.WriteLine("\nPart Time Employee");
+            Console.WriteLine("ID : " + EmpId);
+            Console.WriteLine("Name : " + Name);
+            Console.WriteLine("Hours Worked : " + HoursWorked);
+            Console.WriteLine("Rate Per Hour : ₹" + RatePerHour);
+            Console.WriteLine("Salary : ₹" + CalculateSalary());
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IPayroll emp1 = new FullTimeEmployee(101, "Aman", 50000);
+            IPayroll emp2 = new PartTimeEmployee(102, "Rahul", 120, 250);
+
+            emp1.DisplayDetails();
+            emp2.DisplayDetails();
+
+            Console.ReadKey();
+        }
+    }
+}
