@@ -1,0 +1,446 @@
+EmployeeCalendar.aspx
+<%@ Page Language="C#" AutoEventWireup="true"
+    CodeBehind="EmployeeCalendar.aspx.cs"
+    Inherits="LeaveApplication.EmployeeCalendar" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Employee Calendar</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 12px;
+            font-family: Arial;
+            background: white;
+        }
+
+        /* Employee Calendar */
+
+        .calendar-page {
+            width: 270px;
+        }
+
+        .calendar-page h2 {
+            font-family: Georgia;
+            font-size: 22px;
+            margin: 0 0 18px 0;
+        }
+
+        .calendar {
+            width: 260px;
+            border: 1px solid #777;
+        }
+
+        .calendar-header {
+            height: 28px;
+            background: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .calendar-header span {
+            padding: 0 4px;
+        }
+
+        .month {
+            flex: 1;
+            text-align: center;
+        }
+
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th {
+            font-size: 14px;
+            padding: 2px;
+        }
+
+        .calendar td {
+            text-align: center;
+            padding: 3px;
+            font-size: 14px;
+        }
+
+        .date-btn {
+            border: none;
+            background: transparent;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 1px;
+        }
+
+        .date-btn:hover {
+            background: #ccc;
+        }
+
+        .selected-label {
+            margin-top: 20px;
+            margin-bottom: 4px;
+        }
+
+        .selected-date {
+            width: 160px;
+            height: 20px;
+        }
+
+        .apply-link {
+            display: block;
+            margin-top: 20px;
+            color: purple;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+
+        /* Leave Application */
+
+        .leave-box {
+            width: 500px;
+            margin-top: 50px;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #d0d0d0;
+        }
+
+        .leave-box h1 {
+            font-size: 24px;
+            margin-top: 18px;
+            margin-bottom: 22px;
+        }
+
+        .field-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .text-input,
+        .select-input,
+        .date-input,
+        .reason-input {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #aaa;
+            padding: 10px;
+            margin-bottom: 14px;
+            font-size: 13px;
+        }
+
+        .select-input {
+            background: #eeeef2;
+        }
+
+        .reason-input {
+            height: 82px;
+            resize: both;
+        }
+
+        .apply-button {
+            width: 100%;
+            height: 37px;
+            border: none;
+            border-radius: 3px;
+            background: #0865b9;
+            color: white;
+            cursor: pointer;
+        }
+
+        .success-message {
+            display: block;
+            margin-top: 16px;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+<form id="form1" runat="server">
+
+    <!-- ========================= -->
+    <!-- EMPLOYEE CALENDAR -->
+    <!-- ========================= -->
+
+    <div class="calendar-page">
+
+        <h2>Employee Calendar</h2>
+
+        <div class="calendar">
+
+            <div class="calendar-header">
+                <span>&lt;</span>
+                <span class="month">August 2026</span>
+                <span>&gt;</span>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+
+                <tr>
+                    <td><asp:LinkButton ID="d27" runat="server"
+                        CssClass="date-btn" OnClick="Date_Click">27</asp:LinkButton></td>
+
+                    <td><asp:LinkButton ID="d28" runat="server"
+                        CssClass="date-btn" OnClick="Date_Click">28</asp:LinkButton></td>
+
+                    <td><asp:LinkButton ID="d29" runat="server"
+                        CssClass="date-btn" OnClick="Date_Click">29</asp:LinkButton></td>
+
+                    <td><asp:LinkButton ID="d30" runat="server"
+                        CssClass="date-btn" OnClick="Date_Click">30</asp:LinkButton></td>
+
+                    <td><asp:LinkButton ID="d31" runat="server"
+                        CssClass="date-btn" OnClick="Date_Click">31</asp:LinkButton></td>
+
+                    <td><asp:LinkButton ID="d1" runat="server"
+                        CssClass="date-btn" OnClick="Date_Click">1</asp:LinkButton></td>
+
+                    <td><asp:LinkButton ID="d2" runat="server"
+                        CssClass="date-btn" OnClick="Date_Click">2</asp:LinkButton></td>
+                </tr>
+
+                <tr>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">3</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">4</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">5</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">6</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">7</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">8</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">9</asp:LinkButton></td>
+                </tr>
+
+                <tr>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">10</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">11</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">12</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">13</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">14</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">15</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">16</asp:LinkButton></td>
+                </tr>
+
+                <tr>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">17</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">18</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">19</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">20</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">21</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">22</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">23</asp:LinkButton></td>
+                </tr>
+
+                <tr>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">24</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">25</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">26</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">27</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">28</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">29</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">30</asp:LinkButton></td>
+                </tr>
+
+                <tr>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">31</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">1</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">2</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">3</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">4</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">5</asp:LinkButton></td>
+                    <td><asp:LinkButton runat="server" CssClass="date-btn"
+                        OnClick="Date_Click">6</asp:LinkButton></td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="selected-label">
+            Selected Date
+        </div>
+
+        <asp:TextBox ID="txtSelectedDate"
+            runat="server"
+            CssClass="selected-date"
+            ReadOnly="true">
+        </asp:TextBox>
+
+        <a class="apply-link" href="#leaveApplication">
+            Apply for Leave
+        </a>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- LEAVE APPLICATION -->
+    <!-- ========================= -->
+
+    <div class="leave-box" id="leaveApplication">
+
+        <h1>Leave Application</h1>
+
+        <asp:Label runat="server"
+            CssClass="field-label"
+            Text="Employee Name">
+        </asp:Label>
+
+        <asp:TextBox ID="txtName"
+            runat="server"
+            CssClass="text-input"
+            Text="Aman singh">
+        </asp:TextBox>
+
+
+        <asp:Label runat="server"
+            CssClass="field-label"
+            Text="Leave Type">
+        </asp:Label>
+
+        <asp:DropDownList ID="ddlLeave"
+            runat="server"
+            CssClass="select-input">
+
+            <asp:ListItem>Casual Leave</asp:ListItem>
+            <asp:ListItem>Sick Leave</asp:ListItem>
+            <asp:ListItem>Earned Leave</asp:ListItem>
+
+        </asp:DropDownList>
+
+
+        <asp:Label runat="server"
+            CssClass="field-label"
+            Text="From Date">
+        </asp:Label>
+
+        <asp:TextBox ID="txtFromDate"
+            runat="server"
+            CssClass="date-input"
+            TextMode="Date"
+            Text="2026-09-22">
+        </asp:TextBox>
+
+
+        <asp:Label runat="server"
+            CssClass="field-label"
+            Text="To Date">
+        </asp:Label>
+
+        <asp:TextBox ID="txtToDate"
+            runat="server"
+            CssClass="date-input"
+            TextMode="Date"
+            Text="2026-10-28">
+        </asp:TextBox>
+
+
+        <asp:Label runat="server"
+            CssClass="field-label"
+            Text="Reason">
+        </asp:Label>
+
+        <asp:TextBox ID="txtReason"
+            runat="server"
+            CssClass="reason-input"
+            TextMode="MultiLine"
+            Text="personal issue">
+        </asp:TextBox>
+
+
+        <asp:Button ID="btnApply"
+            runat="server"
+            Text="Apply Leave"
+            CssClass="apply-button"
+            OnClick="btnApply_Click" />
+
+
+        <asp:Label ID="lblMessage"
+            runat="server"
+            CssClass="success-message">
+        </asp:Label>
+
+    </div>
+
+</form>
+
+</body>
+</html>
+
+using System;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace LeaveApplication
+{
+    public partial class EmployeeCalendar : Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void Date_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = sender as LinkButton;
+
+            if (btn != null)
+            {
+                txtSelectedDate.Text =
+                    btn.Text + " August 2026";
+            }
+        }
+
+        protected void btnApply_Click(object sender, EventArgs e)
+        {
+            lblMessage.Text =
+                "Leave application submitted successfully.";
+        }
+    }
+}
